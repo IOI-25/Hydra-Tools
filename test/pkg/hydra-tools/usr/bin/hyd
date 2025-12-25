@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bash /usr/lib/IOI/Hydra/main.sh $@

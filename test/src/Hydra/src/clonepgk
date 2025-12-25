@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+import sys
+import requests
+import toml
+import json
+import tarfile
+import os
+from dotenv import load_dotenv
+from colorama import Fore, Style
+from lib import readversion
+import shutil
+
+load_dotenv(dotenv_path="/usr/lib/IOI/Hydra/.secrets/.env")
+
+pathapi = "/usr/lib/IOI/Hydra/.secrets/API/.ACS/.clonepgk.json"
+
+def installed(name, command):
+
+    shutil.copy(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/bin/{command}", f"/usr/lib/IOI/Hydra/modules/{command}")
+
+    if os.path.isdir(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/lib"):
+        shutil.copytree(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/lib", f"/usr/lib/IOI/Hydra/modules/{name}/lib", dirs_exist_ok=True)
+
+    if os.path.isdir(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/docs"):
+        shutil.copytree(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/docs", f"/usr/lib/IOI/Hydra/modules/{name}/docs", dirs_exist_ok=True)
+
+    return True
+
+def checkpkg(name):
+    if not os.path.isdir(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk"):
+        print(f"{Fore.YELLOW}Not have to pgk folder{Style.RESET_ALL}")
+        return False
+    if not os.path.isdir(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/bin"):
+        print(f"{Fore.YELLOW}Not have to bin folder.{Style.RESET_ALL}")
+        return False
+    command = os.listdir(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/bin")
+    if len(command) != 1:
+        print(f"{Fore.YELLOW}Only one file is allowed.{Style.RESET_ALL}")
+        return False
+
+    if not os.path.isfile(f"/usr/lib/IOI/Hydra/tmp/{name}/pgk/bin/{command[0]}"):
+        print(f"{Fore.YELLOW}It must be a file.{Style.RESET_ALL}")
+        return False
+    
+    return installed(name, command[0])
+    
+try:
+    with open(pathapi, "r") as f:
+        infoapi = json.loads(f.read())
+except PermissionError:
+    print(f"{Fore.RED}Use sudo{Style.RESET_ALL}")
+    exit()
+
+def main():
+    for i in sys.argv[1:]:
+        print(f"{Fore.GREEN}Cloning {i}...{Style.RESET_ALL}")
+        r = requests.get(f"{infoapi['urls']['search']}", params={"name": f"{i}.tar.gz", "api": os.getenv("ACS_API_KEY")})
+        if r.status_code != 200:
+            print(f"{Fore.RED}Package {i} not found{Style.RESET_ALL}")
+            continue
+        with open(f"/usr/lib/IOI/Hydra/tmp/{i}.tar.gz", "wb") as f:
+            f.write(r.content)
+        with tarfile.open(f"/usr/lib/IOI/Hydra/tmp/{i}.tar.gz", "r:gz") as f:
+            f.extractall(f"/usr/lib/IOI/Hydra/tmp/{i}/", filter='fully_trusted')
+        os.remove(f"/usr/lib/IOI/Hydra/tmp/{i}.tar.gz")
+    
+        if checkpkg(i):
+            print(f"{Fore.GREEN}Installed{Style.RESET_ALL}")
+        else:
+            print(f"{Fore.RED}Failed{Style.RESET_ALL}")
+            return
+
+        shutil.rmtree(f"/usr/lib/IOI/Hydra/tmp/{i}")
+        
+    print(f"{Fore.GREEN}Done{Style.RESET_ALL}")
+
+if __name__ == "__main__":
+    main()

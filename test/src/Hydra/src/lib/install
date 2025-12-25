@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+
+from os import mkdir
+from logging import shutdown
+import requests
+import tarfile
+import shutil
+import os
+from colorama import Fore, Style
+
+ask = input(f"{Fore.GREEN}Do you want to install Hydra? (y/n){Style.RESET_ALL}")
+if ask.lower() != "y":
+    exit()
+
+try:
+    shutil.rmtree("/usr/lib/IOI/Hydra", ignore_errors=True)
+except PermissionError:
+    print(f"{Fore.RED}Use sudo{Style.RESET_ALL}")
+    exit()
+
+os.mkdir("/usr/lib/IOI/Hydra")
+os.mkdir("/usr/lib/IOI/Hydra/pgk")
+
+filepgk = requests.get("https://github.com/IOI-25/Hydra-Tools/raw/refs/heads/main/releases/update/26.1/hydra-pacman-26.1.tar.gz")
+with open("/usr/lib/IOI/Hydra/pgk/hydra-pacman-26.1.tar.gz", "wb") as f:
+    f.write(filepgk.content)
+
+with tarfile.open("/usr/lib/IOI/Hydra/pgk/hydra-pacman-26.1.tar.gz", "r:gz") as tar:
+    tar.extractall("/usr/lib/IOI", filter='data')
+
+shutil.rmtree("/usr/lib/IOI/Hydra/pgk")
+
+for root, dirs, files in os.walk("/usr/lib/IOI/Hydra"):
+    for f in files:
+        os.chmod(os.path.join(root, f), 0o755)
+    for d in dirs:
+        os.chmod(os.path.join(root, d), 0o755)
