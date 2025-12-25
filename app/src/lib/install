@@ -26,7 +26,7 @@ with open("/usr/lib/IOI/Hydra/pgk/hydra-pacman-26.1.tar.gz", "wb") as f:
     f.write(filepgk.content)
 
 with tarfile.open("/usr/lib/IOI/Hydra/pgk/hydra-pacman-26.1.tar.gz", "r:gz") as tar:
-    tar.extractall("/usr/lib/IOI")
+    tar.extractall("/usr/lib/IOI", filter='data')
 
 shutil.rmtree("/usr/lib/IOI/Hydra/pgk")
 

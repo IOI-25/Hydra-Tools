@@ -26,15 +26,15 @@ validpgpkeys=()
 
 
 check() {
-	bash -n $srcdir/app/main.sh
+	bash -n $srcdir/Hydra/main.sh
 }
 
 package() {
 	mkdir -p "$pkgdir/usr/bin"
-	install -Dm755 $srcdir/app/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
-	install -Dm755 $srcdir/app/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
-	install -Dm644 $srcdir/app/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
-	install -Dm644 $srcdir/app/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
+	install -Dm755 $srcdir/Hydra/firt_time.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
+	install -Dm755 $srcdir/Hydra/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
+	install -Dm644 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
+	install -Dm644 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
 	cat << EOF > "$pkgdir/usr/bin/hyd"
 #!/usr/bin/env bash
 bash /usr/lib/IOI/Hydra/main.sh \$@
