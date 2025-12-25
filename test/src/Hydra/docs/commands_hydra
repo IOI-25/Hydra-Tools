@@ -1,6 +1,0 @@
--m <module> <args> | Run module
--r <module> | Remove module
--c <module> | Clone module
--u | Update module
--l | List modules
--v | Version

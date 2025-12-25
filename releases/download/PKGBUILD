@@ -31,7 +31,7 @@ check() {
 
 package() {
 	mkdir -p "$pkgdir/usr/bin"
-	install -Dm755 $srcdir/Hydra/first_time.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
+	install -Dm755 $srcdir/Hydra/firt_time.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
 	install -Dm755 $srcdir/Hydra/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
 	install -Dm644 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
 	install -Dm644 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
