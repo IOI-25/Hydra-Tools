@@ -1,0 +1,43 @@
+
+pkgname=hydra-tools
+pkgver=26.1
+pkgrel=1
+epoch=
+pkgdesc="Hydra is a package manager for IOI"
+arch=('x86_64')
+url="https://github.com/IOI-25/Hydra-Tools"
+license=('GPL')
+groups=()
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("https://github.com/IOI-25/Hydra-Tools/raw/refs/heads/main/releases/download/hydra-pacman-26.1.tar.gz")
+noextract=()
+sha256sums=("SKIP")
+validpgpkeys=()
+
+
+check() {
+	bash -n $srcdir/app/main.sh
+}
+
+package() {
+	mkdir -p "$pkgdir/usr/bin"
+	install -Dm755 $srcdir/app/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
+	install -Dm755 $srcdir/app/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
+	install -Dm644 $srcdir/app/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
+	install -Dm644 $srcdir/app/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
+	cat << EOF > "$pkgdir/usr/bin/hyd"
+#!/usr/bin/env bash
+bash /usr/lib/IOI/Hydra/main.sh \$@
+EOF
+	chmod +x "$pkgdir/usr/bin/hyd"
+}
