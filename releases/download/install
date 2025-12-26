@@ -4,10 +4,8 @@ pkg_manager=$(ls /usr/bin/apt /usr/bin/dnf /usr/bin/pacman /usr/bin/zypper 2>/de
 if [ $pkg_manager = "/usr/bin/pacman" ]; then
     mkdir Hydra
     echo "Create a folder."
-    cd Hydra
-    curl -o PKGBUILD https://raw.githubusercontent.com/IOI-25/Hydra-Tools/refs/heads/main/releases/download/PKGBUILD
+    curl -o Hydra/PKGBUILD https://raw.githubusercontent.com/IOI-25/Hydra-Tools/refs/heads/main/releases/download/PKGBUILD
     echo "Download PKGBUILD."
-    cd ..
     echo "Change directory."
     exit 0
 fi
