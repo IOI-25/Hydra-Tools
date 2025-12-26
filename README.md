@@ -1,7 +1,7 @@
 # install
 1.โคนด้วยคำสั่ง curl
 ``` bash
-curl -fsSL https://github.com/IOI-25/Hydra-Tools/raw/refs/heads/main/releases/download/install | bash
+curl -fsSL https://github.com/IOI-25/Hydra-Tools/raw/refs/heads/main/releases/download/install | sh
 ```
 2.หลังจากรันจะมีโฟลเดอร์hydraให้เข้าไป
 
