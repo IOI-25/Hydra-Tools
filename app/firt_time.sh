@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+version="26.1.1"
+
 if [ ! -d /usr/lib/IOI/Hydra/tmp ]; then
     mkdir /usr/lib/IOI/Hydra/tmp
 fi
@@ -13,5 +16,10 @@ pip install -r /usr/lib/IOI/Hydra/requirements.txt --upgrade --quiet
 
 if [ $1 = "-i" ]; then
     python3 /usr/lib/IOI/Hydra/src/lib/install
+    exit 0
+fi
+
+if [ $1 = "-v" ]; then
+    echo "Installation system version: $version"
     exit 0
 fi
