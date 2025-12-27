@@ -20,7 +20,7 @@ install=
 changelog=
 source=("https://github.com/IOI-25/Hydra-Tools/raw/refs/heads/main/releases/update/$pkgver/hydra-pacman-$pkgver.tar.gz")
 noextract=()
-sha256sums=("01b016c80b6d582b7ffe92f810afe23e669c86b29157597d638524edcdcaecbd")
+sha256sums=("095bb14356567925251e94922f900065c8edd6a79bac6074f4e2483ce65e24ed")
 validpgpkeys=()
 
 
