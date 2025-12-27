@@ -37,6 +37,9 @@ package() {
 	cp -r $srcdir/Hydra/src "$pkgdir/usr/lib/IOI/Hydra/src"
 	cp -r $srcdir/Hydra/.secrets "$pkgdir/usr/lib/IOI/Hydra/.secrets"
 	install -Dm644 $srcdir/Hydra/docs/commands_hydra "$pkgdir/usr/lib/IOI/Hydra/docs/commands_hydra"
+	chmod -R 755 "$pkgdir/usr/lib/IOI/Hydra/src"
+	chmod -R 644 "$pkgdir/usr/lib/IOI/Hydra/.secrets"
+	chmod 755 "$pkgdir/usr/lib/IOI/Hydra/docs"
 	cat << EOF > "$pkgdir/usr/bin/hyd"
 #!/usr/bin/env bash
 bash /usr/lib/IOI/Hydra/main.sh \$@
