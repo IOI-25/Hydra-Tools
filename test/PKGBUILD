@@ -30,16 +30,16 @@ check() {
 
 package() {
 	mkdir -p "$pkgdir/usr/bin"
-	install -Dm755 $srcdir/Hydra/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
-	install -Dm755 $srcdir/Hydra/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
-	install -Dm644 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
-	install -Dm644 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
+	install -Dm777 $srcdir/Hydra/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
+	install -Dm777 $srcdir/Hydra/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
+	install -Dm777 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
+	install -Dm777 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
 	cp -r $srcdir/Hydra/src "$pkgdir/usr/lib/IOI/Hydra/src"
 	cp -r $srcdir/Hydra/.secrets "$pkgdir/usr/lib/IOI/Hydra/.secrets"
-	install -Dm644 $srcdir/Hydra/docs/commands_hydra "$pkgdir/usr/lib/IOI/Hydra/docs/commands_hydra"
-	chmod -R 755 "$pkgdir/usr/lib/IOI/Hydra/src"
+	install -Dm777 $srcdir/Hydra/docs/commands_hydra "$pkgdir/usr/lib/IOI/Hydra/docs/commands_hydra"
+	chmod -R 777 "$pkgdir/usr/lib/IOI/Hydra/src"
 	chmod -R 644 "$pkgdir/usr/lib/IOI/Hydra/.secrets"
-	chmod 755 "$pkgdir/usr/lib/IOI/Hydra/docs"
+	chmod 777 "$pkgdir/usr/lib/IOI/Hydra/docs"
 	cat << EOF > "$pkgdir/usr/bin/hyd"
 #!/usr/bin/env bash
 bash /usr/lib/IOI/Hydra/main.sh \$@
