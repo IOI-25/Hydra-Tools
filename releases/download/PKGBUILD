@@ -1,5 +1,5 @@
 pkgname=hydra-tools
-pkgver=26.1.2
+pkgver=26.1.3
 pkgrel=1
 epoch=
 pkgdesc="Hydra is a package manager for IOI"

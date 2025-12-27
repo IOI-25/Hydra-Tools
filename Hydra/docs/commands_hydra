@@ -1,6 +1,0 @@
--m <module> <args> | Run module
--r <module> | Remove module | use sudo
--c <module> | Clone module | use sudo
--u | Update module | use sudo
--l | List modules
--v | Version

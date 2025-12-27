@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 
+if [ ! -d /usr/lib/IOI/venv ]; then
+    if [ "$EUID" -ne 0 ]; then
+        echo "venv not found"
+        echo "run as sudo"
+        exit 1
+    fi
+    python -m venv /usr/lib/IOI/venv
+fi
 
-if [ "$EUID" -nez 0 ]; then
+source /usr/lib/IOI/venv/bin/activate
+pip install -r /usr/lib/IOI/Hydra/requirements.txt --upgrade --quiet
+
+if [ -z "$1" ]; then
+    cat /usr/lib/IOI/Hydra/docs/commands_hydra
+    exit 0
+fi
+
+if [ "$EUID" -eq 0 ]; then
     if [ ! -d /usr/lib/IOI/Hydra/tmp ]; then
         mkdir /usr/lib/IOI/Hydra/tmp
     fi
-
-    if [ ! -d /usr/lib/IOI/venv ]; then
-        python -m venv /usr/lib/IOI/venv
-    fi
-
-    source /usr/lib/IOI/venv/bin/activate
-
-    pip install -r /usr/lib/IOI/Hydra/requirements.txt --upgrade --quiet
-
     if [ ! -d /usr/lib/IOI/Hydra/modules ]; then
         mkdir /usr/lib/IOI/Hydra/modules
     fi
@@ -35,11 +42,6 @@ if [ "$EUID" -nez 0 ]; then
         echo "not update"
         exit 0
     fi
-fi
-
-if [ -z $1 ]; then
-    cat /usr/lib/IOI/Hydra/docs/commands_hydra
-    exit 0
 fi
 
 if [ $1 = "-m" ]; then
