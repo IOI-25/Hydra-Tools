@@ -40,6 +40,7 @@ package() {
 	chmod -R 755 "$pkgdir/usr/lib/IOI/Hydra/src"
 	chmod -R 644 "$pkgdir/usr/lib/IOI/Hydra/.secrets"
 	chmod 777 "$pkgdir/usr/lib/IOI/Hydra/docs"
+	chmod 777 "$pkgdir/usr/lib/IOI/Hydra"
 	cat << EOF > "$pkgdir/usr/bin/hyd"
 #!/usr/bin/env bash
 bash /usr/lib/IOI/Hydra/main.sh \$@
