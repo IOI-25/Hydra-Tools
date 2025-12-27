@@ -1,5 +1,5 @@
 pkgname=hydra-tools
-pkgver=26.1.1
+pkgver=26.1.2
 pkgrel=1
 epoch=
 pkgdesc="Hydra is a package manager for IOI"
@@ -30,17 +30,16 @@ check() {
 
 package() {
 	mkdir -p "$pkgdir/usr/bin"
-	install -Dm777 $srcdir/Hydra/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
-	install -Dm777 $srcdir/Hydra/src/lib/install "$pkgdir/usr/lib/IOI/Hydra/src/lib/install"
-	install -Dm777 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
-	install -Dm777 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
+	install -Dm755 $srcdir/Hydra/main.sh "$pkgdir/usr/lib/IOI/Hydra/main.sh"
+	install -Dm755 $srcdir/Hydra/info.toml "$pkgdir/usr/lib/IOI/Hydra/info.toml"
+	install -Dm755 $srcdir/Hydra/requirements.txt "$pkgdir/usr/lib/IOI/Hydra/requirements.txt"
 	cp -ra $srcdir/Hydra/src "$pkgdir/usr/lib/IOI/Hydra"
 	cp -ra $srcdir/Hydra/.secrets "$pkgdir/usr/lib/IOI/Hydra"
-	install -Dm777 $srcdir/Hydra/docs/commands_hydra "$pkgdir/usr/lib/IOI/Hydra/docs/commands_hydra"
+	install -Dm755 $srcdir/Hydra/docs/commands_hydra "$pkgdir/usr/lib/IOI/Hydra/docs/commands_hydra"
 	chmod -R 755 "$pkgdir/usr/lib/IOI/Hydra/src"
 	chmod -R 644 "$pkgdir/usr/lib/IOI/Hydra/.secrets"
-	chmod 777 "$pkgdir/usr/lib/IOI/Hydra/docs"
-	chmod 777 "$pkgdir/usr/lib/IOI/Hydra"
+	chmod 755 "$pkgdir/usr/lib/IOI/Hydra/docs"
+	chmod 755 "$pkgdir/usr/lib/IOI/Hydra"
 	cat << EOF > "$pkgdir/usr/bin/hyd"
 #!/usr/bin/env bash
 bash /usr/lib/IOI/Hydra/main.sh \$@
